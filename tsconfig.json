@@ -22,6 +22,16 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/pages/page.tsx",
+    "src/app/history/page.tsx",
+    "src/app/tracker/page.tsx",
+    "src/app/components/navbar/navbar.tsx",
+    "src/app/components/trackersTable"
+  ],
   "exclude": ["node_modules"]
 }

@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap");
+
+.navbar {
+  background: #181846;
+  padding: 0 34px;
+  border-radius: 0 0 22px 22px !important;
+  border: none !important;
+  height: 112px;
+}
+.navbar > a[class="p-menubar-button"] {
+  display: none !important;
+}
+.navbarOptions {
+  display: flex;
+  height: 100%;
+}
+
+.navbarOptions button {
+  margin-top: -5px;
+  background: #181846;
+  cursor: pointer;
+  color: #c4c5d7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 17px;
+  border-radius: 20px;
+  width: 179px;
+  height: 100%;
+}
+
+.buttonDisabled {
+  margin-top: -5px;
+  background: #181846;
+  color: #c4c5d7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 17px;
+  width: 179px;
+  border: none;
+}
+
+.tabTrackers {
+  background-color: #181846 !important;
+}
+
+.logout {
+  color: #c4c5d7;
+  border: none;
+}
+
+.logout:active {
+  color: #f9f9fd;
+}
+
+.logoutIcon {
+  margin-right: 6px;
+}
+
+.logoutTooltip {
+  width: 140px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 14px;
+}
+
+.menubar > a[class="p-menubar-button"] {
+  display: none !important;
+}
