@@ -117,14 +117,10 @@ function TrackersTable() {
     }
   };
 
-  useEffect(() => {
-    if (user === null) router.push("/");
-  }, [user]);
-
-  useEffect(() => {
-    getData();
-    setChangeDescription(false);
-  }, [deleteTimer, changeDescription]);
+  const onPageChange = (e: any) => {
+    setFirst(e.first);
+    setRows(e.rows);
+  };
 
   const footerContent = (
     <div>
@@ -151,8 +147,20 @@ function TrackersTable() {
   );
 
   useEffect(() => {
+    if (user === null) router.push("/");
+  }, [user]);
+
+  useEffect(() => {
+    getData();
+    setChangeDescription(false);
+  }, [deleteTimer, changeDescription]);
+
+  useEffect(() => {
     if (!visible) setDescription("");
   }, [visible]);
+
+  const slicedData = trackersSorted.slice(first, first + rows);
+  const totalRecords = trackersSorted.length;
 
   return (
     <>
@@ -195,14 +203,14 @@ function TrackersTable() {
       </div>
 
       <DataTable
-        value={trackersSorted}
+        value={slicedData}
         tableStyle={{ minWidth: "50rem" }}
         showGridlines
         rows={rows}
         first={first}
-        rowsPerPageOptions={[5, 10, 25, 50]}
         lazy
         loading={!trackersSorted ? true : false}
+        onPage={(e) => onPageChange(e)}
       >
         <Column
           field="timeLogged"
@@ -259,12 +267,8 @@ function TrackersTable() {
         }
         rows={rows}
         first={first}
-        totalRecords={trackersSorted.length}
-        onPageChange={(e) => {
-          setFirst(e.first);
-          setRows(e.rows);
-        }}
-        rowsPerPageOptions={[5, 10, 25, 50]}
+        totalRecords={totalRecords}
+        onPageChange={(e) => onPageChange(e)}
         template={
           "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
         }

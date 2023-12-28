@@ -121,6 +121,32 @@ const HistoryTable = () => {
     }
   };
 
+  const dataTableValue =
+    trackersByStartAndEndDate.length && searchDescription != ""
+      ? isSortedByStartEndAndSearch
+      : trackersByStartAndEndDate && endDate
+      ? trackersByStartAndEndDate
+      : isSortedBySearch
+      ? isSortedBySearch
+      : trackers;
+
+  const paginationLength =
+    trackersByStartAndEndDate.length && searchDescription != ""
+      ? isSortedByStartEndAndSearch.length
+      : trackersByStartAndEndDate && endDate
+      ? trackersByStartAndEndDate.length
+      : isSortedBySearch
+      ? isSortedBySearch.length
+      : trackers.length;
+
+  const onPageChange = (e: any) => {
+    setFirst(e.first);
+    setRows(e.rows);
+  };
+
+  const slicedData = dataTableValue.slice(first, first + rows);
+  const totalRecords = dataTableValue.length;
+
   useEffect(() => {
     if (user === null) router.push("/");
     getData();
@@ -137,7 +163,7 @@ const HistoryTable = () => {
   ]);
 
   return (
-    <div className="p-28">
+    <div>
       <p className="text-[24px] font-bold nunito text-[#0C0D25] flex">
         Trackers History
       </p>
@@ -159,10 +185,16 @@ const HistoryTable = () => {
               inputId="startDate nunito"
               placeholder="Select start date"
               inputClassName="outline-none border-none shadow-none"
+              showButtonBar
               onChange={(e: any) => {
                 {
-                  setStartDate(e.value as Date);
-                  setStartTimestamp(e.value.getTime());
+                  if (e.value == null) {
+                    setStartDate(undefined);
+                    setStartTimestamp(0);
+                  } else {
+                    setStartDate(e.value as Date);
+                    setStartTimestamp(e.value.getTime());
+                  }
                 }
               }}
             />
@@ -193,9 +225,15 @@ const HistoryTable = () => {
               placeholder="Select start date"
               inputId="endDate"
               inputClassName="outline-none border-none shadow-none"
+              showButtonBar
               onChange={(e: any) => {
-                setEndDate(e.value as Date);
-                setEndTimestamp(e.value.getTime());
+                if (e.value == null) {
+                  setEndDate(undefined);
+                  setEndTimestamp(0);
+                } else {
+                  setEndDate(e.value as Date);
+                  setEndTimestamp(e.value.getTime());
+                }
               }}
               dateFormat="dd.mm.yy"
             />
@@ -240,22 +278,15 @@ const HistoryTable = () => {
 
       <DataTable
         className="mt-5"
-        value={
-          trackersByStartAndEndDate.length && searchDescription != ""
-            ? isSortedByStartEndAndSearch
-            : trackersByStartAndEndDate.length
-            ? trackersByStartAndEndDate
-            : isSortedBySearch
-            ? isSortedBySearch
-            : trackers
-        }
+        value={slicedData}
         tableStyle={{ minWidth: "50rem" }}
         showGridlines
+        lazy
         rows={rows}
         first={first}
-        rowsPerPageOptions={[5, 10, 25, 50]}
-        lazy
-        loading={!trackersSorted ? true : false}
+        loading={!dataTableValue ? true : false}
+        totalRecords={totalRecords}
+        onPage={(e) => onPageChange(e)}
       >
         <Column
           field="date"
@@ -325,14 +356,12 @@ const HistoryTable = () => {
         lastPageLinkIcon={
           <Image src={LastPage} alt="last page" className="cursor-pointer" />
         }
-        rows={rows}
         first={first}
-        totalRecords={trackersSorted.length}
+        rows={rows}
+        totalRecords={totalRecords}
         onPageChange={(e) => {
-          setFirst(e.first);
-          setRows(e.rows);
+          onPageChange(e);
         }}
-        rowsPerPageOptions={[5, 10, 25, 50]}
         template={
           "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
         }

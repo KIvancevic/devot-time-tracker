@@ -95,6 +95,8 @@ const trackerAction: React.FC<trackerActionProp> = (props) => {
           label="Rename"
           icon="pi pi-check"
           onClick={() => {
+            setVisible(false);
+
             updateDescriptionHook();
             setDescription("");
             setChangeDescription(true);

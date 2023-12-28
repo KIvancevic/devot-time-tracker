@@ -9,7 +9,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/firebase/config";
 import { Toast } from "primereact/toast";
 import { Toast as ToastType } from "primereact/toast";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import styles from "./navbar.module.css";
 import { useState } from "react";
@@ -18,7 +18,6 @@ import { Button } from "primereact/button";
 const navbar = () => {
   const toastRef = useRef<ToastType>(null);
   const { user, currentPath } = useAuthContext();
-
   const [isLogoutClicked, setIsLogoutClicked] = useState(false);
   const disableLogout = user === null ? true : false;
   const activeIndex =
@@ -74,7 +73,6 @@ const navbar = () => {
       ) : (
         <>
           <TabMenu model={tabMenuItems} activeIndex={activeIndex} />
-
           <Button
             className={user === null ? styles.buttonDisabled : styles.logout}
             onClick={handleLogout}

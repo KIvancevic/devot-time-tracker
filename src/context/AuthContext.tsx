@@ -28,7 +28,6 @@ interface AuthContextProps {
   setResume: Dispatch<SetStateAction<boolean>>;
   setStop: Dispatch<SetStateAction<boolean>>;
   setStopAll: Dispatch<SetStateAction<boolean>>;
-
   setDeleteTimer: Dispatch<SetStateAction<boolean>>;
   setChangeDescription: Dispatch<SetStateAction<boolean>>;
   setAddNewTimer: Dispatch<SetStateAction<boolean>>;

@@ -28,6 +28,7 @@ export default function SignInForm() {
 
     const { result, error } = await signIn(email, password);
 
+    if (result) console.log("Succesfully logged in");
     if (error) {
       if (toastRef.current) {
         toastRef.current.show({
@@ -41,6 +42,7 @@ export default function SignInForm() {
     }
     router.push("/tracker");
   };
+
   return (
     <>
       <Card className={"bg-[#F9F9FD] shadow-none p-2"}>
@@ -61,10 +63,7 @@ export default function SignInForm() {
                   placeholder="Email address"
                   className="w-full mb-3 border-none mt-5"
                 />
-                <div
-                  className="w-full flex items-center bg-white rounded-[3px] passwordInput "
-                  onClick={() => console.log("clicked")}
-                >
+                <div className="w-full flex items-center bg-white rounded-[3px] passwordInput ">
                   <InputText
                     onChange={(e) => setPassword(e.target.value)}
                     id="password"
